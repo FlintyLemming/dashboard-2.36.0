@@ -2150,6 +2150,73 @@ export const messages = {
     "policies.deleteDescription":
       "Are you sure you want to delete this access control policy? This action cannot be undone.",
     "notification.genericError": "Something went wrong...",
+    "peerGroupSelector.addOrSelectGroups": "Add or select group(s)...",
+    "peerGroupSelector.searchGroups":
+      "Search groups or add new group by pressing \"Enter\"...",
+    "peerGroupSelector.searchResource": "Search resource...",
+    "peerGroupSelector.searchPeer": "Search peer...",
+    "peerGroupSelector.search": "Search...",
+    "peerGroupSelector.addGroupByPressingPrefix":
+      "Add this group by pressing",
+    "peerGroupSelector.addGroupByPressingSuffix": "",
+    "peerGroupSelector.enterKey": "'Enter'",
+    "peerGroupSelector.routingPeerGroupDisabled":
+      "This group is already part of the routing peer and can not be used for the access control groups.",
+    "peerGroupSelector.zeroUsers": "0 User(s)",
+    "peerGroupSelector.noMatchingResources":
+      "There are no resources matching your search. Please try a different search term.",
+    "peerGroupSelector.noResourcesAvailable":
+      "There are no resources available yet.",
+    "peerGroupSelector.noMatchingPeers":
+      "There are no peers matching your search. Please try a different search term.",
+    "peerGroupSelector.noPeersAvailable":
+      "There are no peers available yet.",
+    "peerGroupSelector.resourceCount": "{count} Resource(s)",
+    "peers.searchPlaceholder": "Search by name, IP, owner or group...",
+    "peers.browserPeersTooltip":
+      "Show temporary peers created by the NetBird browser client. These peers are ephemeral and will be deleted automatically after a short period of time.",
+    "peers.lastSeen": "Last seen",
+    "table.serialNumber": "Serial Number",
+    "table.version": "Version",
+    "peerMultiSelect.overwriteGroupsTitle": "Overwrite existing groups?",
+    "peerMultiSelect.overwriteGroupsDescription":
+      "Are you sure you want to overwrite the existing groups of your {count} selected peer(s)? This action cannot be undone.",
+    "peerMultiSelect.overwrite": "Overwrite",
+    "peerMultiSelect.assignGroupsTitle": "Assign Groups to Peers",
+    "peerMultiSelect.assignGroupsDescription":
+      "Groups were successfully assigned to the peers",
+    "peerMultiSelect.updatingGroups":
+      "Updating the groups of the selected peers...",
+    "peerMultiSelect.deletePeersTitle": "Delete '{count}' {peerWord}?",
+    "peerMultiSelect.deletePeersDescription":
+      "Are you sure you want to delete these peers? This action cannot be undone.",
+    "peerMultiSelect.deleteAll": "Delete All",
+    "peerMultiSelect.deletePeersNotifyTitle": "Delete Peers",
+    "peerMultiSelect.deletePeersNotifyDescription":
+      "Peers were successfully deleted",
+    "peerMultiSelect.deletingPeers": "Deleting the selected peers...",
+    "peerMultiSelect.assigningGroups": "Assigning groups...",
+    "peerMultiSelect.groupsAssigned": "Groups successfully assigned",
+    "peerMultiSelect.assignGroupsLabel": "Assign Groups",
+    "peerMultiSelect.assignGroupsHelp":
+      "Assign the following groups to the selected peers. Previously assigned groups will be kept unless you choose to overwrite them.",
+    "peerMultiSelect.overwriteExistingGroups": "Overwrite Existing Groups",
+    "peerMultiSelect.overwriteExistingGroupsHelp":
+      "Overwrite the existing groups of the peers with the selected ones. Previously assigned groups will be removed.",
+    "peerMultiSelect.peersSelected": "{count} Peer(s) selected",
+    "peerMultiSelect.addGroups": "Add Groups",
+    "peerMultiSelect.overwriteGroups": "Overwrite Groups",
+    "lastTimeRow.lastSeenOn": "Last seen on",
+    "peerGroupSelector.goToNetworksToAdd": "Networks",
+    "peerGroupSelector.goToPeersToAdd": "Peers",
+    "peerGroupSelector.toAddResourcesPrefix":
+      "Go to",
+    "peerGroupSelector.toAddResourcesSuffix":
+      "to add some resources.",
+    "peerGroupSelector.toAddPeersPrefix":
+      "Go to",
+    "peerGroupSelector.toAddPeersSuffix":
+      "to add some peers.",
   },
   "zh-CN": {
     "common.language": "语言",
@@ -4174,6 +4241,63 @@ export const messages = {
     "policies.deleteDescription":
       "你确定要删除这个访问控制策略吗？此操作无法撤销。",
     "notification.genericError": "发生了一些问题...",
+    "peerGroupSelector.addOrSelectGroups": "添加或选择分组...",
+    "peerGroupSelector.searchGroups":
+      "搜索分组或按 \"Enter\" 添加新分组...",
+    "peerGroupSelector.searchResource": "搜索资源...",
+    "peerGroupSelector.searchPeer": "搜索设备...",
+    "peerGroupSelector.search": "搜索...",
+    "peerGroupSelector.addGroupByPressingPrefix": "按",
+    "peerGroupSelector.addGroupByPressingSuffix": "添加此分组",
+    "peerGroupSelector.enterKey": "'Enter'",
+    "peerGroupSelector.routingPeerGroupDisabled":
+      "此分组已是路由设备的一部分，不能用于访问控制分组。",
+    "peerGroupSelector.zeroUsers": "0 个用户",
+    "peerGroupSelector.noMatchingResources":
+      "没有找到匹配的资源。请尝试不同的搜索条件。",
+    "peerGroupSelector.noResourcesAvailable": "暂无可用资源。",
+    "peerGroupSelector.noMatchingPeers":
+      "没有找到匹配的设备。请尝试不同的搜索条件。",
+    "peerGroupSelector.noPeersAvailable": "暂无可用设备。",
+    "peerGroupSelector.resourceCount": "{count} 个资源",
+    "peers.searchPlaceholder": "按名称、IP、所有者或分组搜索...",
+    "peers.browserPeersTooltip":
+      "显示由 NetBird 浏览器客户端创建的临时设备。这些设备是短暂存在的，会在一段时间后自动删除。",
+    "peers.lastSeen": "最后在线",
+    "table.serialNumber": "序列号",
+    "table.version": "版本",
+    "peerMultiSelect.overwriteGroupsTitle": "覆盖现有分组？",
+    "peerMultiSelect.overwriteGroupsDescription":
+      "你确定要覆盖所选 {count} 台设备的现有分组吗？此操作无法撤销。",
+    "peerMultiSelect.overwrite": "覆盖",
+    "peerMultiSelect.assignGroupsTitle": "为设备分配分组",
+    "peerMultiSelect.assignGroupsDescription": "分组已成功分配给设备",
+    "peerMultiSelect.updatingGroups": "正在更新所选设备的分组...",
+    "peerMultiSelect.deletePeersTitle": "删除 {count} {peerWord}？",
+    "peerMultiSelect.deletePeersDescription":
+      "你确定要删除这些设备吗？此操作无法撤销。",
+    "peerMultiSelect.deleteAll": "全部删除",
+    "peerMultiSelect.deletePeersNotifyTitle": "删除设备",
+    "peerMultiSelect.deletePeersNotifyDescription": "设备已成功删除",
+    "peerMultiSelect.deletingPeers": "正在删除所选设备...",
+    "peerMultiSelect.assigningGroups": "正在分配分组...",
+    "peerMultiSelect.groupsAssigned": "分组分配成功",
+    "peerMultiSelect.assignGroupsLabel": "分配分组",
+    "peerMultiSelect.assignGroupsHelp":
+      "将以下分组分配给所选设备。之前分配的分组会保留，除非你选择覆盖它们。",
+    "peerMultiSelect.overwriteExistingGroups": "覆盖现有分组",
+    "peerMultiSelect.overwriteExistingGroupsHelp":
+      "用选定的分组覆盖设备的现有分组。之前分配的分组将被移除。",
+    "peerMultiSelect.peersSelected": "{count} 个已选设备",
+    "peerMultiSelect.addGroups": "添加分组",
+    "peerMultiSelect.overwriteGroups": "覆盖分组",
+    "lastTimeRow.lastSeenOn": "最后在线于",
+    "peerGroupSelector.goToNetworksToAdd": "网络",
+    "peerGroupSelector.goToPeersToAdd": "设备",
+    "peerGroupSelector.toAddResourcesPrefix": "前往",
+    "peerGroupSelector.toAddResourcesSuffix": "添加资源。",
+    "peerGroupSelector.toAddPeersPrefix": "前往",
+    "peerGroupSelector.toAddPeersSuffix": "添加设备。",
   },
 } as const;
 

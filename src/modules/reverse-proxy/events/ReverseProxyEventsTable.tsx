@@ -35,10 +35,13 @@ import { ReverseProxyEventsReasonCell } from "@/modules/reverse-proxy/events/Rev
 import { ReverseProxyEventsDurationCell } from "@/modules/reverse-proxy/events/ReverseProxyEventsDurationCell";
 import { ReverseProxyEventsBytesCell } from "@/modules/reverse-proxy/events/ReverseProxyEventsBytesCell";
 import { useI18n } from "@/i18n/I18nProvider";
+import type { MessageKey } from "@/i18n/messages";
+
+type TranslationValues = Record<string, string | number>;
 
 export const makeEventsColumns = (
   servicesMap: Map<string, ReverseProxy>,
-  t: (key: string, values?: Record<string, unknown>) => string,
+  t: (key: MessageKey, values?: TranslationValues) => string,
 ): ColumnDef<ReverseProxyEvent>[] => [
   {
     id: "timestamp",

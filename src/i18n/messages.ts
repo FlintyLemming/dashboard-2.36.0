@@ -22,6 +22,7 @@ export const messages = {
     "common.username": "Username",
     "common.password": "Password",
     "common.value": "Value",
+    "common.savingChanges": "Saving Changes",
     "common.thisPage": "this page",
     "common.learnMorePrefix": "Learn more about",
     "common.inDocumentationSuffix": "in our documentation.",
@@ -95,6 +96,7 @@ export const messages = {
     "peers.blockedTitle": "Add new device to your network",
     "peers.blockedDescription":
       "To get started, install NetBird and log in using your email account. After that you should be connected. If you have further questions check out our",
+    "peers.addPeer": "Add Peer",
     "peers.installationGuide": "Installation Guide",
     "setupKeys.title": "Setup Keys",
     "setupKeys.description":
@@ -484,7 +486,6 @@ export const messages = {
     "reverseProxy.customDomainNoClusterHosted":
       "No proxy clusters are currently connected. Please try again in a few minutes. If the issue persists, check",
     "reverseProxy.customDomainNoClusterHostedSuffix": "or reach out to",
-    "reverseProxy.netbirdStatus": "NetBird Status",
     "reverseProxy.customDomainNoClusterSelfHosted":
       "No proxy clusters are currently connected. Please ensure at least one proxy is running before adding a domain.",
     "reverseProxy.proxyClusters": "Proxy Clusters",
@@ -622,7 +623,6 @@ export const messages = {
     "networks.multiPolicyDescription":
       "This policy uses one or many resource group(s) as destinations. {action} this policy will also affect following resources:",
     "networks.updating": "Updating",
-    "networks.deleting": "Deleting",
     "networks.editPolicy": "Edit Policy",
     "networks.deletePolicy": "Delete Policy",
     "networks.deleteTitle": "Delete network '{name}'?",
@@ -655,6 +655,7 @@ export const messages = {
     "table.role": "Role",
     "table.status": "Status",
     "table.groups": "Groups",
+    "table.user": "User",
     "table.lastLogin": "Last Login",
     "table.usage": "Usage",
     "table.lastUsed": "Last used",
@@ -1337,9 +1338,6 @@ export const messages = {
     "reverseProxyTargets.emptyDescription":
       "Create resources and expose services securely through NetBird's reverse proxy.",
     "reverseProxy.authHeadersTitle": "HTTP Headers",
-    "reverseProxy.authHeadersDescription":
-      "Require specific HTTP headers to access this service.",
-    "reverseProxy.addHeader": "Add Header",
     "reverseProxy.addHeaders": "Add Headers",
     "reverseProxy.removeAll": "Remove All",
     "reverseProxy.headersCalloutLine1":
@@ -1351,9 +1349,6 @@ export const messages = {
     "reverseProxy.headerTypeCustom": "Custom Header",
     "reverseProxy.headerIndex": "Header {index}",
     "reverseProxy.headerIndexWithName": "Header {index} - {header}",
-    "reverseProxy.headerNamePlaceholder": "e.g., X-API-Key",
-    "reverseProxy.headerValuePlaceholder":
-      "e.g., AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe",
     "reverseProxy.bearerPlaceholder":
       "e.g. eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
     "reverseProxy.authMethodPassword": "Password",
@@ -1379,7 +1374,6 @@ export const messages = {
     "proxyEvents.bytes": "Bytes",
     "proxyEvents.authMethod": "Auth Method",
     "proxyEvents.reason": "Reason",
-    "proxyEvents.title": "Proxy Events",
     "proxyEvents.searchPlaceholder": "Search by IP, host, path, user...",
     "proxyEvents.emptyTitle": "No Proxy Events Yet",
     "proxyEvents.emptyDescription":
@@ -1544,7 +1538,6 @@ export const messages = {
     "groups.renameDescription": "Set an easily identifiable name for your group.",
     "groups.renamePlaceholder": "e.g., Developers",
     "groups.renameExists": "This group already exists. Please choose another name.",
-    "actions.save": "Save",
     "accessPolicies.searchPlaceholder": "Search by name and description...",
     "accessPolicies.emptyGroupTitle":
       "This group is not used within any policies yet",
@@ -1579,9 +1572,7 @@ export const messages = {
     "network.descriptionHelp":
       "Write a short description to add more context to this network.",
     "network.descriptionPlaceholder": "e.g., Berlin, Office 12",
-    "actions.saveChanges": "Save Changes",
     "actions.viewDetails": "View Details",
-    "actions.rename": "Rename",
     "actions.delete": "Delete",
     "actions.edit": "Edit",
     "actions.continue": "Continue",
@@ -2199,6 +2190,7 @@ export const messages = {
     "reverseProxy.removeRule": "移除规则",
     "reverseProxy.addRule": "添加规则",
     "reverseProxy.searchTargetsPlaceholder": "按 URL、目标地址或目标搜索...",
+    "common.savingChanges": "正在保存更改",
     "common.thisPage": "当前页面",
     "common.learnMorePrefix": "了解更多关于",
     "common.inDocumentationSuffix": "的内容，请查看我们的文档。",
@@ -2272,6 +2264,7 @@ export const messages = {
     "peers.blockedTitle": "将新设备加入你的网络",
     "peers.blockedDescription":
       "开始使用前，请先安装 NetBird，并使用你的邮箱账号登录。完成后设备应该就会连接成功。如果你还有问题，可以查看我们的",
+    "peers.addPeer": "添加设备",
     "peers.installationGuide": "安装指南",
     "setupKeys.title": "注册密钥",
     "setupKeys.description":
@@ -2622,7 +2615,6 @@ export const messages = {
     "reverseProxy.customDomainNoClusterHosted":
       "当前没有已连接的代理集群。请几分钟后再试。如果问题持续存在，请查看",
     "reverseProxy.customDomainNoClusterHostedSuffix": "或联系",
-    "reverseProxy.netbirdStatus": "NetBird 状态",
     "reverseProxy.customDomainNoClusterSelfHosted":
       "当前没有已连接的代理集群。请确保至少有一个代理正在运行后再添加域名。",
     "reverseProxy.proxyClusters": "代理集群",
@@ -2757,7 +2749,6 @@ export const messages = {
     "networks.multiPolicyDescription":
       "此策略使用一个或多个资源分组作为目标。{action}该策略也会影响以下资源：",
     "networks.updating": "更新",
-    "networks.deleting": "删除",
     "networks.editPolicy": "编辑策略",
     "networks.deletePolicy": "删除策略",
     "networks.deleteTitle": "删除网络 '{name}'？",
@@ -2789,6 +2780,7 @@ export const messages = {
     "table.role": "角色",
     "table.status": "状态",
     "table.groups": "分组",
+    "table.user": "用户",
     "table.lastLogin": "最近登录",
     "table.usage": "使用量",
     "table.lastUsed": "最近使用",
@@ -3403,9 +3395,6 @@ export const messages = {
     "reverseProxyTargets.emptyDescription":
       "创建资源并通过 NetBird 的反向代理安全地暴露服务。",
     "reverseProxy.authHeadersTitle": "HTTP 请求头",
-    "reverseProxy.authHeadersDescription":
-      "要求请求携带特定的 HTTP 请求头才能访问此服务。",
-    "reverseProxy.addHeader": "添加请求头",
     "reverseProxy.addHeaders": "添加请求头",
     "reverseProxy.removeAll": "移除全部",
     "reverseProxy.headersCalloutLine1":
@@ -3417,9 +3406,6 @@ export const messages = {
     "reverseProxy.headerTypeCustom": "自定义请求头",
     "reverseProxy.headerIndex": "请求头 {index}",
     "reverseProxy.headerIndexWithName": "请求头 {index} - {header}",
-    "reverseProxy.headerNamePlaceholder": "例如：X-API-Key",
-    "reverseProxy.headerValuePlaceholder":
-      "例如：AIiaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe",
     "reverseProxy.bearerPlaceholder":
       "例如：eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
     "reverseProxy.authMethodPassword": "密码",
@@ -3445,7 +3431,6 @@ export const messages = {
     "proxyEvents.bytes": "字节数",
     "proxyEvents.authMethod": "认证方式",
     "proxyEvents.reason": "原因",
-    "proxyEvents.title": "代理事件",
     "proxyEvents.searchPlaceholder": "按 IP、主机、路径、用户搜索...",
     "proxyEvents.emptyTitle": "暂无代理事件",
     "proxyEvents.emptyDescription":
@@ -3596,7 +3581,6 @@ export const messages = {
     "groups.renameDescription": "为你的分组设置一个易于识别的名称。",
     "groups.renamePlaceholder": "例如：开发人员",
     "groups.renameExists": "该分组已存在。请选择其他名称。",
-    "actions.save": "保存",
     "accessPolicies.searchPlaceholder": "按名称和描述搜索...",
     "accessPolicies.emptyGroupTitle": "这个分组还没有被任何策略使用",
     "accessPolicies.emptyGroupDescription":
@@ -3628,9 +3612,7 @@ export const messages = {
     "network.descriptionLabel": "描述（可选）",
     "network.descriptionHelp": "写一段简短描述，为这个网络补充更多上下文。",
     "network.descriptionPlaceholder": "例如：柏林办公室 12 楼",
-    "actions.saveChanges": "保存更改",
     "actions.viewDetails": "查看详情",
-    "actions.rename": "重命名",
     "actions.delete": "删除",
     "actions.edit": "编辑",
     "actions.continue": "继续",

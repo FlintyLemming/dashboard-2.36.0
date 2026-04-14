@@ -30,6 +30,30 @@ type ServiceModeConfig = {
   icon: ReactNode;
 };
 
+type ServiceModeStaticConfig = {
+  label: string;
+  description: string;
+};
+
+export const SERVICE_MODES: Record<ServiceMode, ServiceModeStaticConfig> = {
+  [ServiceMode.HTTP]: {
+    label: "HTTP/S Service",
+    description: "Proxy HTTP and HTTPS requests to one or more targets.",
+  },
+  [ServiceMode.TLS]: {
+    label: "TLS Passthrough",
+    description: "Pass encrypted TLS traffic directly to the target.",
+  },
+  [ServiceMode.TCP]: {
+    label: "TCP Service",
+    description: "Forward raw TCP traffic to a selected target and port.",
+  },
+  [ServiceMode.UDP]: {
+    label: "UDP Service",
+    description: "Forward UDP traffic to a selected target and port.",
+  },
+};
+
 export const ReverseProxyServiceModeSelector = ({
   value,
   onChange,

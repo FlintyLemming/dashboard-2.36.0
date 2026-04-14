@@ -19,6 +19,7 @@ import {
 } from "@components/select/SelectDropdown";
 import { CountrySelector } from "@/components/ui/CountrySelector";
 import { useI18n } from "@/i18n/I18nProvider";
+import type { MessageKey } from "@/i18n/messages";
 import { AccessRestrictions } from "@/interfaces/ReverseProxy";
 
 type AccessAction = "allow" | "block";
@@ -129,7 +130,10 @@ type Props = {
 
 function validateRule(
   rule: AccessRule,
-  t: (key: string, values?: Record<string, string | number>) => string,
+  t: (
+    key: MessageKey,
+    values?: Record<string, string | number>,
+  ) => string,
 ): string {
   if (rule.type === "country" || !rule.value) return "";
   if (rule.type === "ip") {

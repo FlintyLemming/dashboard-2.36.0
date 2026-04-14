@@ -118,6 +118,7 @@ export default function PeerPage() {
 }
 
 function PeerOverview() {
+  const { t } = useI18n();
   const { peer } = usePeer();
 
   return (

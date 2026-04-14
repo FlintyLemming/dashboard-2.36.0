@@ -228,6 +228,8 @@ const DisconnectedMessage = ({
   peerIp,
   onReconnect,
 }: DisconnectedMessageProps) => {
+  const { t } = useI18n();
+
   return (
     <div
       className={

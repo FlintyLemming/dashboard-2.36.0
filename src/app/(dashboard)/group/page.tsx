@@ -1,0 +1,341 @@
+"use client";
+
+import Breadcrumbs from "@components/Breadcrumbs";
+import FullTooltip from "@components/FullTooltip";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/Tabs";
+import FullScreenLoading from "@components/ui/FullScreenLoading";
+import { GroupBadgeIcon } from "@components/ui/GroupBadgeIcon";
+import { PageNotFound } from "@components/ui/PageNotFound";
+import { RestrictedAccess } from "@components/ui/RestrictedAccess";
+import useRedirect from "@hooks/useRedirect";
+import useFetchApi from "@utils/api";
+import { cn, singularize } from "@utils/helpers";
+import { FolderGit2Icon, Layers3Icon, PencilIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import AccessControlIcon from "@/assets/icons/AccessControlIcon";
+import DNSIcon from "@/assets/icons/DNSIcon";
+import DNSZoneIcon from "@/assets/icons/DNSZoneIcon";
+import NetworkRoutesIcon from "@/assets/icons/NetworkRoutesIcon";
+import PeerIcon from "@/assets/icons/PeerIcon";
+import SetupKeysIcon from "@/assets/icons/SetupKeysIcon";
+import TeamIcon from "@/assets/icons/TeamIcon";
+import { GroupProvider, useGroupContext } from "@/contexts/GroupProvider";
+import { usePermissions } from "@/contexts/PermissionsProvider";
+import RoutesProvider from "@/contexts/RoutesProvider";
+import { Group, GROUP_TOOLTIP_TEXT } from "@/interfaces/Group";
+import PageContainer from "@/layouts/PageContainer";
+import { GroupDNSZonesSection } from "@/modules/groups/details/GroupDNSZonesSection";
+import { GroupNameserversSection } from "@/modules/groups/details/GroupNameserversSection";
+import { GroupNetworkRoutesSection } from "@/modules/groups/details/GroupNetworkRoutesSection";
+import { GroupPeersSection } from "@/modules/groups/details/GroupPeersSection";
+import { GroupPoliciesSection } from "@/modules/groups/details/GroupPoliciesSection";
+import { GroupResourcesSection } from "@/modules/groups/details/GroupResourcesSection";
+import { GroupSetupKeysSection } from "@/modules/groups/details/GroupSetupKeysSection";
+import { GroupUsersSection } from "@/modules/groups/details/GroupUsersSection";
+import useGroupDetails from "@/modules/groups/details/useGroupDetails";
+import { useI18n } from "@/i18n/I18nProvider";
+
+export default function GroupPage() {
+  const { t } = useI18n();
+  const queryParameter = useSearchParams();
+  const { isRestricted } = usePermissions();
+  const groupId = queryParameter.get("id");
+  const {
+    data: group,
+    isLoading,
+    error,
+  } = useFetchApi<Group>(`/groups/${groupId}`, true);
+
+  useRedirect("/groups", false, !groupId || isRestricted);
+
+  if (isRestricted) {
+    return (
+      <PageContainer>
+        <RestrictedAccess page={t("groupDetails.title")} />
+      </PageContainer>
+    );
+  }
+
+  if (error)
+    return (
+      <PageNotFound
+        title={error?.message}
+        description={t("groupDetails.notFound")}
+      />
+    );
+
+  return group && !isLoading ? (
+    <PageContainer>
+      <RoutesProvider>
+        <GroupProvider group={group} isDetailPage={true}>
+          <div className={"p-default py-6 pb-0 w-full mb-[6px]"}>
+            <Breadcrumbs>
+              <Breadcrumbs.Item
+                href={"/groups"}
+                label={t("groups.title")}
+                icon={<FolderGit2Icon size={14} />}
+              />
+              <Breadcrumbs.Item label={group.name} active />
+            </Breadcrumbs>
+            <GroupDetailsName />
+          </div>
+          <GroupOverviewTabs group={group} />
+        </GroupProvider>
+      </RoutesProvider>
+    </PageContainer>
+  ) : (
+    <FullScreenLoading />
+  );
+}
+
+const GroupDetailsName = () => {
+  const { group, isJWTGroup, isAllowedToRename, openGroupRenameModal } =
+    useGroupContext();
+  const { permission } = usePermissions();
+
+  return (
+    <div className={"w-full"}>
+      <h1 className={"flex items-center gap-3 w-full whitespace-nowrap"}>
+        <GroupBadgeIcon id={group?.id} issued={group?.issued} size={20} />
+        {group.name}
+        {group.name !== "All" && permission?.groups?.update && (
+          <div>
+            <FullTooltip
+              content={
+                <div className={"text-xs max-w-xs"}>
+                  {isJWTGroup
+                    ? GROUP_TOOLTIP_TEXT.RENAME.JWT
+                    : GROUP_TOOLTIP_TEXT.RENAME.INTEGRATION}
+                </div>
+              }
+              interactive={false}
+              disabled={isAllowedToRename}
+              className={"w-full block"}
+            >
+              <div
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center gap-2 dark:text-neutral-300 text-neutral-500 hover:text-neutral-100 transition-all hover:bg-nb-gray-800/60 rounded-md cursor-pointer",
+                  !isAllowedToRename &&
+                    "opacity-40 cursor-not-allowed pointer-events-none",
+                )}
+                onClick={openGroupRenameModal}
+              >
+                <PencilIcon size={16} />
+              </div>
+            </FullTooltip>
+          </div>
+        )}
+      </h1>
+    </div>
+  );
+};
+
+const validAllGroupTabs = [
+  "policies",
+  "resources",
+  "network-routes",
+  "nameservers",
+  "zones",
+];
+
+const validOtherGroupTabs = ["users", "peers", "setup-keys"];
+
+const GroupOverviewTabs = ({ group }: { group: Group }) => {
+  const { t } = useI18n();
+  const searchParams = useSearchParams();
+
+  const getInitialTab = () => {
+    const isAllGroup = group.name === "All";
+    const tabParam = searchParams.get("tab");
+    const validTabs = isAllGroup
+      ? validAllGroupTabs
+      : [...validAllGroupTabs, ...validOtherGroupTabs];
+    if (tabParam === null) return isAllGroup ? "policies" : "users";
+    if (isAllGroup) {
+      return validTabs.includes(tabParam) ? tabParam : "policies";
+    }
+    return validTabs.includes(tabParam) ? tabParam : "users";
+  };
+
+  const [tab, setTab] = useState(getInitialTab());
+  const { groupDetails, isLoading } = useGroupDetails(group?.id || "");
+
+  const peersCount = groupDetails?.peers_count || 0;
+  const usersCount = groupDetails?.users?.length || 0;
+  const policiesCount = groupDetails?.policies?.length || 0;
+  const resourcesCount = groupDetails?.resources_count || 0;
+  const routesCount = groupDetails?.routes?.length || 0;
+  const nameserversCount = groupDetails?.nameservers?.length || 0;
+  const zonesCount = groupDetails?.zones?.length || 0;
+  const setupKeysCount = groupDetails?.setupKeys?.length || 0;
+
+  return (
+    <Tabs
+      defaultValue={tab}
+      onValueChange={(v) => setTab(v)}
+      value={tab}
+      className={"pt-2 pb-0 mb-0"}
+    >
+      <TabsList justify={"start"} className={"px-8"}>
+        {group.name !== "All" && (
+          <TabsTrigger
+            value={"users"}
+            className={groupDetails === null ? "animate-pulse" : ""}
+          >
+            <TeamIcon
+              size={12}
+              className={
+                "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+              }
+            />
+            {singularize(t("users.title"), usersCount)}
+          </TabsTrigger>
+        )}
+
+        {group.name !== "All" && (
+          <TabsTrigger
+            value={"peers"}
+            className={groupDetails === null ? "animate-pulse" : ""}
+          >
+            <PeerIcon
+              size={12}
+              className={
+                "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+              }
+            />
+            {singularize(t("peers.title"), peersCount)}
+          </TabsTrigger>
+        )}
+
+        <TabsTrigger
+          value={"policies"}
+          className={groupDetails === null ? "animate-pulse" : ""}
+        >
+          <AccessControlIcon
+            size={12}
+            className={
+              "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+            }
+          />
+          {singularize(t("nav.policies"), policiesCount)}
+        </TabsTrigger>
+
+        <TabsTrigger
+          value={"resources"}
+          className={groupDetails === null ? "animate-pulse" : ""}
+        >
+          <Layers3Icon size={14} />
+          {singularize(t("networkDetails.resources"), resourcesCount)}
+        </TabsTrigger>
+
+        <TabsTrigger
+          value={"network-routes"}
+          className={groupDetails === null ? "animate-pulse" : ""}
+        >
+          <NetworkRoutesIcon
+            size={12}
+            className={
+              "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+            }
+          />
+          {singularize(t("networkRoutesPage.title"), routesCount)}
+        </TabsTrigger>
+
+        <TabsTrigger
+          value={"nameservers"}
+          className={groupDetails === null ? "animate-pulse" : ""}
+        >
+          <DNSIcon
+            size={12}
+            className={
+              "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+            }
+          />
+          {singularize(t("nameservers.title"), nameserversCount)}
+        </TabsTrigger>
+
+        <TabsTrigger
+          value={"zones"}
+          className={groupDetails === null ? "animate-pulse" : ""}
+        >
+          <DNSZoneIcon
+            size={16}
+            className={
+              "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+            }
+          />
+          {singularize(t("zones.title"), zonesCount)}
+        </TabsTrigger>
+
+        {group.name !== "All" && (
+          <TabsTrigger
+            value={"setup-keys"}
+            className={groupDetails === null ? "animate-pulse" : ""}
+          >
+            <SetupKeysIcon
+              size={12}
+              className={
+                "fill-nb-gray-500 group-data-[state=active]/trigger:fill-netbird transition-all"
+              }
+            />
+            {singularize(t("setupKeys.title"), setupKeysCount)}
+          </TabsTrigger>
+        )}
+      </TabsList>
+
+      <TabsContent value={"users"} className={"pb-8"}>
+        <GroupUsersSection users={groupDetails?.users} isLoading={isLoading} />
+      </TabsContent>
+
+      <TabsContent value={"peers"} className={"pb-8"}>
+        <GroupPeersSection
+          peers={groupDetails?.peersOfGroup}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"policies"} className={"pb-8"}>
+        <GroupPoliciesSection
+          policies={groupDetails?.policies}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"resources"} className={"pb-8"}>
+        <GroupResourcesSection
+          resources={groupDetails?.networkResources}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"network-routes"} className={"pb-8"}>
+        <GroupNetworkRoutesSection
+          routes={groupDetails?.routes}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"nameservers"} className={"pb-8"}>
+        <GroupNameserversSection
+          nameserverGroups={groupDetails?.nameservers}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"zones"} className={"pb-8"}>
+        <GroupDNSZonesSection
+          zones={groupDetails?.zones}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+
+      <TabsContent value={"setup-keys"} className={"pb-8"}>
+        <GroupSetupKeysSection
+          setupKeys={groupDetails?.setupKeys}
+          isLoading={isLoading}
+        />
+      </TabsContent>
+    </Tabs>
+  );
+};

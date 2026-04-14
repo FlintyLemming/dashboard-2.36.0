@@ -1,0 +1,75 @@
+import Button from "@components/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@components/DropdownMenu";
+import { EyeIcon, MoreVertical, PencilLineIcon, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { usePermissions } from "@/contexts/PermissionsProvider";
+import { useI18n } from "@/i18n/I18nProvider";
+import { Network } from "@/interfaces/Network";
+import { useNetworksContext } from "@/modules/networks/NetworkProvider";
+
+type Props = {
+  network: Network;
+};
+export default function NetworkActionCell({ network }: Readonly<Props>) {
+  const { permission } = usePermissions();
+  const { deleteNetwork, openEditNetworkModal } = useNetworksContext();
+  const router = useRouter();
+  const { t } = useI18n();
+
+  return (
+    <div className={"flex justify-end pr-4"}>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger
+          asChild={true}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+        >
+          <Button variant={"secondary"} className={"!px-3"}>
+            <MoreVertical size={16} className={"shrink-0"} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-auto" align="end">
+          <DropdownMenuItem
+            onClick={() => router.push(`/network?id=${network.id}`)}
+          >
+            <div className={"flex gap-3 items-center"}>
+              <EyeIcon size={14} className={"shrink-0"} />
+              {t("actions.viewDetails")}
+            </div>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => openEditNetworkModal(network)}
+            disabled={!permission.networks.update}
+          >
+            <div className={"flex gap-3 items-center"}>
+              <PencilLineIcon size={14} className={"shrink-0"} />
+              {t("actions.rename")}
+            </div>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem
+            onClick={() => deleteNetwork(network)}
+            variant={"danger"}
+            disabled={!permission.networks.delete}
+          >
+            <div className={"flex gap-3 items-center"}>
+              <Trash2 size={14} className={"shrink-0"} />
+              {t("actions.delete")}
+            </div>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
